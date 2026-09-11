@@ -1,0 +1,665 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DARNA | Better Products. Better Living.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        darnabg: '#F8F7F4',
+                        darnadark: '#1C1C1C',
+                        darnaaccent: '#B89947',
+                        darnagray: '#8C8C8C'
+                    },
+                    boxShadow: {
+                        'premium': '0 20px 40px -10px rgba(0,0,0,0.05)',
+                        'premium-hover': '0 30px 60px -15px rgba(0,0,0,0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #F8F7F4; color: #1C1C1C; overflow-x: hidden; }
+        
+        .parallax-layer { transition: transform 0.1s ease-out; }
+        .perspective-container { perspective: 1200px; }
+        
+        .tilt-card { transform-style: preserve-3d; will-change: transform; }
+        
+        .glass-panel { background: rgba(248, 247, 244, 0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F8F7F4; }
+        ::-webkit-scrollbar-thumb { background: #D1CFC7; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #B89947; }
+        
+        .fade-up { animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(30px); }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        
+        .float-anim { animation: float 6s ease-in-out infinite; }
+        .float-anim-delayed { animation: float 6s ease-in-out 3s infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+        
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.4s ease; opacity: 0; }
+        .faq-content.open { opacity: 1; }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-darnaaccent selection:text-white">
+
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-50 glass-panel transition-all duration-300" id="header">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button class="md:hidden" id="mobile-menu-btn" aria-label="Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <a href="#" class="font-serif text-2xl font-bold tracking-widest text-darnadark">DARNA</a>
+            </div>
+            <nav class="hidden md:flex gap-10 text-sm font-medium tracking-wide uppercase">
+                <a href="#shop" class="hover:text-darnaaccent transition">Shop</a>
+                <a href="#collections" class="hover:text-darnaaccent transition">Collections</a>
+                <a href="#lifestyle" class="hover:text-darnaaccent transition">Lifestyle</a>
+                <a href="#about" class="hover:text-darnaaccent transition">About</a>
+            </nav>
+            <div class="flex items-center gap-6">
+                <button aria-label="Search" class="hover:text-darnaaccent transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+                <button aria-label="Cart" class="hover:text-darnaaccent transition relative">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    <span class="cart-count absolute -top-2 -right-2 bg-darnaaccent text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center scale-0 transition-transform duration-300 origin-bottom-right">1</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-darnabg z-40 transform translate-x-full transition-transform duration-500 md:hidden flex flex-col pt-32 px-8">
+        <nav class="flex flex-col gap-8 text-2xl font-serif">
+            <a href="#shop" class="mobile-link text-darnadark hover:text-darnaaccent transition">Shop</a>
+            <a href="#collections" class="mobile-link text-darnadark hover:text-darnaaccent transition">Collections</a>
+            <a href="#lifestyle" class="mobile-link text-darnadark hover:text-darnaaccent transition">Lifestyle</a>
+            <a href="#about" class="mobile-link text-darnadark hover:text-darnaaccent transition">About</a>
+        </nav>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none">
+            <h1 class="font-serif text-[25vw] font-bold tracking-widest">DARNA</h1>
+        </div>
+        <div class="absolute inset-0 z-0" id="hero-scene">
+            <div class="parallax-layer absolute top-20 left-10 w-64 h-64 bg-gradient-to-br from-darnaaccent/20 to-transparent rounded-full blur-3xl" data-speed="0.05"></div>
+            <div class="parallax-layer absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-tl from-gray-300 to-transparent rounded-full blur-3xl" data-speed="0.08"></div>
+            
+            <div class="parallax-layer absolute right-[-5%] top-1/4 w-[40%] h-[60%] bg-white rounded-[2rem] shadow-premium transform rotate-6 float-anim hidden lg:block" data-speed="0.12">
+                <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=800" alt="Kitchen Premium" class="w-full h-full object-cover rounded-[2rem] opacity-95">
+            </div>
+            <div class="parallax-layer absolute left-[5%] bottom-1/4 w-[25%] h-[40%] bg-white rounded-[2rem] shadow-premium transform -rotate-3 float-anim-delayed hidden lg:block" data-speed="0.15">
+                <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&q=80&w=600" alt="Home Organisation" class="w-full h-full object-cover rounded-[2rem] opacity-95">
+            </div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center py-20">
+            <div class="md:w-2/3 flex flex-col gap-6 text-center md:text-left">
+                <span class="uppercase tracking-[0.2em] text-darnaaccent text-xs font-semibold fade-up" style="animation-delay: 0.1s">Home & Kitchen • UAE</span>
+                <h1 class="font-serif text-6xl md:text-8xl lg:text-[7rem] font-bold leading-[1.05] text-darnadark fade-up" style="animation-delay: 0.2s">
+                    Better<br>Products.<br><span class="text-darnaaccent italic font-medium">Better Living.</span>
+                </h1>
+                <p class="text-darnagray max-w-md mx-auto md:mx-0 text-lg md:text-xl fade-up" style="animation-delay: 0.3s">
+                    Elevate your home with premium, minimalist essentials designed for the modern UAE lifestyle.
+                </p>
+                <div class="mt-6 fade-up" style="animation-delay: 0.4s">
+                    <a href="#shop" class="inline-flex items-center justify-center px-10 py-5 bg-darnadark text-white rounded-full font-medium tracking-wide hover:bg-darnaaccent transition-colors duration-300 shadow-lg hover:shadow-xl">
+                        Shop Now
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="py-24 bg-white" id="collections">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-darnadark mb-4">Featured Categories</h2>
+                <div class="w-16 h-1 bg-darnaaccent mx-auto rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 md:gap-6">
+                <a href="/collections/kitchen-essentials" class="tilt-card group relative rounded-3xl overflow-hidden aspect-square bg-darnabg shadow-premium flex items-end p-5 border border-gray-100">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=400" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt="Kitchen Essentials">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                    <span class="relative z-10 font-medium text-white group-hover:text-darnaaccent transition-colors text-sm tracking-wide">Kitchen Essentials</span>
+                </a>
+                <a href="/collections/home-organisation" class="tilt-card group relative rounded-3xl overflow-hidden aspect-square bg-darnabg shadow-premium flex items-end p-5 border border-gray-100">
+                    <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&q=80&w=400" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt="Home Organisation">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                    <span class="relative z-10 font-medium text-white group-hover:text-darnaaccent transition-colors text-sm tracking-wide">Home Organisation</span>
+                </a>
+                <a href="/collections/cleaning" class="tilt-card group relative rounded-3xl overflow-hidden aspect-square bg-darnabg shadow-premium flex items-end p-5 border border-gray-100">
+                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=400" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt="Cleaning">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                    <span class="relative z-10 font-medium text-white group-hover:text-darnaaccent transition-colors text-sm tracking-wide">Cleaning</span>
+                </a>
+                <a href="/collections/storage" class="tilt-card group relative rounded-3xl overflow-hidden aspect-square bg-darnabg shadow-premium flex items-end p-5 border border-gray-100">
+                    <img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=400" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt="Storage">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                    <span class="relative z-10 font-medium text-white group-hover:text-darnaaccent transition-colors text-sm tracking-wide">Storage</span>
+                </a>
+                <a href="/collections/cooking-tools" class="tilt-card group relative rounded-3xl overflow-hidden aspect-square bg-darnabg shadow-premium flex items-end p-5 border border-gray-100">
+                    <img src="https://images.unsplash.com/photo-1593618998160-e34014e67546?auto=format&fit=crop&q=80&w=400" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt="Cooking Tools">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                    <span class="relative z-10 font-medium text-white group-hover:text-darnaaccent transition-colors text-sm tracking-wide">Cooking Tools</span>
+                </a>
+                <a href="/collections/home-accessories" class="tilt-card group relative rounded-3xl overflow-hidden aspect-square bg-darnabg shadow-premium flex items-end p-5 border border-gray-100">
+                    <img src="https://images.unsplash.com/photo-1513519245088-0e12902e35ca?auto=format&fit=crop&q=80&w=400" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt="Home Accessories">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                    <span class="relative z-10 font-medium text-white group-hover:text-darnaaccent transition-colors text-sm tracking-wide">Home Accessories</span>
+                </a>
+                <a href="/collections/smart-home" class="tilt-card group relative rounded-3xl overflow-hidden aspect-square bg-darnabg shadow-premium flex items-end p-5 border border-gray-100">
+                    <img src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=400" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt="Smart Home">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
+                    <span class="relative z-10 font-medium text-white group-hover:text-darnaaccent transition-colors text-sm tracking-wide">Smart Home</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="py-32 bg-darnabg" id="shop">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-darnadark mb-4">Best Sellers</h2>
+                    <p class="text-darnagray text-lg">Curated premium essentials for your home.</p>
+                </div>
+                <a href="#shop" class="text-sm font-medium border-b border-darnadark pb-1 hover:text-darnaaccent hover:border-darnaaccent transition">View All Products</a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="tilt-card group bg-white rounded-3xl p-5 shadow-premium relative flex flex-col border border-gray-100">
+                    <a href="#product" class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-5 bg-darnabg block">
+                        <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&q=80&w=500" alt="Ceramic Canister Set" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <span class="absolute top-3 left-3 bg-darnaaccent text-white text-[10px] uppercase tracking-wider px-3 py-1 rounded-full font-medium">Sale</span>
+                    </a>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-medium text-darnadark text-lg"><a href="#product" class="hover:text-darnaaccent transition-colors">Ceramic Canister Set</a></h3>
+                    </div>
+                    <div class="flex items-center gap-2 mt-auto mb-6">
+                        <span class="text-darnadark font-semibold">AED 120</span>
+                        <span class="text-darnagray line-through text-sm">AED 150</span>
+                    </div>
+                    <form action="/cart/add" method="post" onsubmit="event.preventDefault(); simulateAddToCart(this);">
+                        <input type="hidden" name="id" value="variant_1">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="w-full bg-darnadark text-white py-3.5 rounded-full text-sm font-medium hover:bg-darnaaccent transition-colors duration-300 flex justify-center items-center gap-2">
+                            <span class="btn-text">Quick Add</span>
+                            <span class="btn-loader hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                        </button>
+                    </form>
+                </div>
+                <!-- Product 2 -->
+                <div class="tilt-card group bg-white rounded-3xl p-5 shadow-premium relative flex flex-col border border-gray-100">
+                    <a href="#product" class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-5 bg-darnabg block">
+                        <img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=500" alt="Modular Storage Box" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </a>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-medium text-darnadark text-lg"><a href="#product" class="hover:text-darnaaccent transition-colors">Modular Storage Box</a></h3>
+                    </div>
+                    <div class="flex items-center gap-2 mt-auto mb-6">
+                        <span class="text-darnadark font-semibold">AED 85</span>
+                    </div>
+                    <form action="/cart/add" method="post" onsubmit="event.preventDefault(); simulateAddToCart(this);">
+                        <input type="hidden" name="id" value="variant_2">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="w-full bg-darnadark text-white py-3.5 rounded-full text-sm font-medium hover:bg-darnaaccent transition-colors duration-300 flex justify-center items-center gap-2">
+                            <span class="btn-text">Quick Add</span>
+                            <span class="btn-loader hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                        </button>
+                    </form>
+                </div>
+                <!-- Product 3 -->
+                <div class="tilt-card group bg-white rounded-3xl p-5 shadow-premium relative flex flex-col border border-gray-100">
+                    <a href="#product" class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-5 bg-darnabg block">
+                        <img src="https://images.unsplash.com/photo-1593618998160-e34014e67546?auto=format&fit=crop&q=80&w=500" alt="Chef Knife Collection" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <span class="absolute top-3 left-3 bg-darnaaccent text-white text-[10px] uppercase tracking-wider px-3 py-1 rounded-full font-medium">Sale</span>
+                    </a>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-medium text-darnadark text-lg"><a href="#product" class="hover:text-darnaaccent transition-colors">Chef Knife Collection</a></h3>
+                    </div>
+                    <div class="flex items-center gap-2 mt-auto mb-6">
+                        <span class="text-darnadark font-semibold">AED 340</span>
+                        <span class="text-darnagray line-through text-sm">AED 400</span>
+                    </div>
+                    <form action="/cart/add" method="post" onsubmit="event.preventDefault(); simulateAddToCart(this);">
+                        <input type="hidden" name="id" value="variant_3">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="w-full bg-darnadark text-white py-3.5 rounded-full text-sm font-medium hover:bg-darnaaccent transition-colors duration-300 flex justify-center items-center gap-2">
+                            <span class="btn-text">Quick Add</span>
+                            <span class="btn-loader hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                        </button>
+                    </form>
+                </div>
+                <!-- Product 4 -->
+                <div class="tilt-card group bg-white rounded-3xl p-5 shadow-premium relative flex flex-col border border-gray-100">
+                    <a href="#product" class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden mb-5 bg-darnabg block">
+                        <img src="https://images.unsplash.com/photo-1513519245088-0e12902e35ca?auto=format&fit=crop&q=80&w=500" alt="Smart Aroma Diffuser" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    </a>
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-medium text-darnadark text-lg"><a href="#product" class="hover:text-darnaaccent transition-colors">Smart Aroma Diffuser</a></h3>
+                    </div>
+                    <div class="flex items-center gap-2 mt-auto mb-6">
+                        <span class="text-darnadark font-semibold">AED 220</span>
+                    </div>
+                    <form action="/cart/add" method="post" onsubmit="event.preventDefault(); simulateAddToCart(this);">
+                        <input type="hidden" name="id" value="variant_4">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="w-full bg-darnadark text-white py-3.5 rounded-full text-sm font-medium hover:bg-darnaaccent transition-colors duration-300 flex justify-center items-center gap-2">
+                            <span class="btn-text">Quick Add</span>
+                            <span class="btn-loader hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Collection -->
+    <section class="py-32 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center gap-20">
+            <div class="lg:w-1/2 relative perspective-container w-full">
+                <div class="relative w-full aspect-[4/5] bg-darnabg rounded-[3rem] shadow-premium overflow-hidden transform transition-transform duration-700 hover:scale-[1.02] group">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=1000" alt="Featured Collection" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                <!-- Floating 3D Card -->
+                <div class="absolute -bottom-10 -right-4 sm:-right-10 bg-white p-8 rounded-[2rem] shadow-premium-hover tilt-card z-10 w-64 border border-gray-100">
+                    <p class="text-[10px] text-darnagray uppercase tracking-[0.2em] mb-2">New Arrival</p>
+                    <p class="font-serif text-2xl font-bold text-darnadark leading-tight mb-4">The Modern<br>Kitchen Set</p>
+                    <form action="/cart/add" method="post" onsubmit="event.preventDefault(); simulateBuyNow(this);">
+                        <input type="hidden" name="id" value="variant_featured">
+                        <button type="submit" class="text-sm text-darnaaccent font-medium hover:text-darnadark transition-colors flex items-center gap-1">
+                            Buy It Now <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="lg:w-1/2 flex flex-col gap-8">
+                <span class="uppercase tracking-[0.2em] text-darnaaccent text-sm font-semibold">Featured Collection</span>
+                <h2 class="font-serif text-4xl md:text-6xl font-bold text-darnadark leading-[1.1]">Designed for <br><span class="italic text-darnagray">Elegance</span> & Function</h2>
+                <p class="text-darnagray text-lg leading-relaxed max-w-lg">
+                    Discover our flagship collection of kitchen essentials. Crafted with sustainable materials and a minimalist aesthetic that complements any modern UAE home. Experience the perfect blend of form and utility.
+                </p>
+                <ul class="space-y-4 mt-2">
+                    <li class="flex items-center gap-4 text-darnadark font-medium">
+                        <span class="w-10 h-10 rounded-full bg-darnaaccent/10 flex items-center justify-center text-darnaaccent"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></span>
+                        Premium sustainable materials
+                    </li>
+                    <li class="flex items-center gap-4 text-darnadark font-medium">
+                        <span class="w-10 h-10 rounded-full bg-darnaaccent/10 flex items-center justify-center text-darnaaccent"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></span>
+                        Space-saving designs
+                    </li>
+                    <li class="flex items-center gap-4 text-darnadark font-medium">
+                        <span class="w-10 h-10 rounded-full bg-darnaaccent/10 flex items-center justify-center text-darnaaccent"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></span>
+                        Dishwasher safe & durable
+                    </li>
+                </ul>
+                <div class="mt-4">
+                    <a href="#shop" class="inline-flex items-center justify-center px-8 py-4 border border-darnadark text-darnadark rounded-full font-medium tracking-wide hover:bg-darnadark hover:text-white transition-colors duration-300">
+                        Explore Collection
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lifestyle Section -->
+    <section class="py-32 bg-darnabg" id="lifestyle">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+                <div>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-darnadark mb-4">The DARNA Lifestyle</h2>
+                    <div class="w-16 h-1 bg-darnaaccent rounded-full"></div>
+                </div>
+                <p class="text-darnagray max-w-md text-lg">Bringing calm, order, and beauty to everyday living in the UAE. A seamless blend of tradition and modern minimalism.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[250px] md:auto-rows-[300px]">
+                <div class="md:col-span-8 md:row-span-2 rounded-[2.5rem] overflow-hidden shadow-premium relative group">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1000" alt="Lifestyle 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000">
+                    <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                </div>
+                <div class="md:col-span-4 md:row-span-1 rounded-[2.5rem] overflow-hidden shadow-premium relative group">
+                    <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=600" alt="Lifestyle 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000">
+                </div>
+                <div class="md:col-span-4 md:row-span-1 rounded-[2.5rem] overflow-hidden shadow-premium relative group">
+                    <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&q=80&w=600" alt="Lifestyle 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why DARNA -->
+    <section class="py-32 bg-white" id="about">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-darnadark mb-4">Why Choose DARNA</h2>
+                <p class="text-darnagray text-lg">Our promise of premium quality and service in the UAE.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="tilt-card flex flex-col items-center gap-6 p-10 rounded-[2rem] bg-darnabg shadow-premium border border-white text-center">
+                    <div class="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-darnaaccent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-darnadark">Fast UAE Delivery</h3>
+                    <p class="text-sm text-darnagray leading-relaxed">Same-day in Dubai, 1-2 days nationwide.</p>
+                </div>
+                <div class="tilt-card flex flex-col items-center gap-6 p-10 rounded-[2rem] bg-darnabg shadow-premium border border-white text-center">
+                    <div class="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-darnaaccent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-darnadark">Cash on Delivery</h3>
+                    <p class="text-sm text-darnagray leading-relaxed">Pay securely when you receive your order.</p>
+                </div>
+                <div class="tilt-card flex flex-col items-center gap-6 p-10 rounded-[2rem] bg-darnabg shadow-premium border border-white text-center">
+                    <div class="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-darnaaccent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-darnadark">Quality Products</h3>
+                    <p class="text-sm text-darnagray leading-relaxed">Premium materials built to last a lifetime.</p>
+                </div>
+                <div class="tilt-card flex flex-col items-center gap-6 p-10 rounded-[2rem] bg-darnabg shadow-premium border border-white text-center">
+                    <div class="w-16 h-16 rounded-full bg-white shadow-sm flex items-center justify-center text-darnaaccent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-darnadark">Easy Returns</h3>
+                    <p class="text-sm text-darnagray leading-relaxed">14-day hassle-free return policy.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="py-32 bg-darnabg">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-darnadark mb-4">Loved by UAE Homes</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="tilt-card bg-white p-10 rounded-[2rem] shadow-premium relative border border-gray-100">
+                    <div class="text-darnaaccent mb-6 flex gap-1 text-xl">★★★★★</div>
+                    <p class="text-darnadark text-lg italic mb-8 leading-relaxed">"The quality of the ceramic canisters is exceptional. They look stunning in my Dubai kitchen and elevate the entire space."</p>
+                    <p class="font-medium text-xs text-darnagray uppercase tracking-widest">— Aisha M.</p>
+                </div>
+                <div class="tilt-card bg-white p-10 rounded-[2rem] shadow-premium relative border border-gray-100">
+                    <div class="text-darnaaccent mb-6 flex gap-1 text-xl">★★★★★</div>
+                    <p class="text-darnadark text-lg italic mb-8 leading-relaxed">"Fast delivery and the packaging was so premium. The smart diffuser is a game-changer for our living room ambiance."</p>
+                    <p class="font-medium text-xs text-darnagray uppercase tracking-widest">— Khalid A.</p>
+                </div>
+                <div class="tilt-card bg-white p-10 rounded-[2rem] shadow-premium relative border border-gray-100">
+                    <div class="text-darnaaccent mb-6 flex gap-1 text-xl">★★★★★</div>
+                    <p class="text-darnadark text-lg italic mb-8 leading-relaxed">"Minimalist, functional, and beautiful. DARNA has become my absolute go-to for all home organisation needs."</p>
+                    <p class="font-medium text-xs text-darnagray uppercase tracking-widest">— Sarah L.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-32 bg-white" id="faq">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-darnadark mb-4">Frequently Asked Questions</h2>
+            </div>
+            <div class="space-y-4" id="faq-accordion">
+                <div class="border border-gray-200 rounded-2xl overflow-hidden bg-darnabg transition-all duration-300 shadow-sm">
+                    <button class="w-full flex justify-between items-center p-6 text-left font-medium text-darnadark focus:outline-none" onclick="toggleFaq(this)">
+                        Do you offer Cash on Delivery in all UAE emirates?
+                        <svg class="w-5 h-5 transform transition-transform duration-300 text-darnaaccent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content px-6 pb-6 text-darnagray">
+                        Yes, we offer Cash on Delivery across all seven emirates including Abu Dhabi, Dubai, Sharjah, and more.
+                    </div>
+                </div>
+                <div class="border border-gray-200 rounded-2xl overflow-hidden bg-darnabg transition-all duration-300 shadow-sm">
+                    <button class="w-full flex justify-between items-center p-6 text-left font-medium text-darnadark focus:outline-none" onclick="toggleFaq(this)">
+                        Are your products sustainable?
+                        <svg class="w-5 h-5 transform transition-transform duration-300 text-darnaaccent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content px-6 pb-6 text-darnagray">
+                        We are committed to sustainability, using recycled materials and eco-friendly packaging wherever possible.
+                    </div>
+                </div>
+                <div class="border border-gray-200 rounded-2xl overflow-hidden bg-darnabg transition-all duration-300 shadow-sm">
+                    <button class="w-full flex justify-between items-center p-6 text-left font-medium text-darnadark focus:outline-none" onclick="toggleFaq(this)">
+                        How can I track my order?
+                        <svg class="w-5 h-5 transform transition-transform duration-300 text-darnaaccent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-content px-6 pb-6 text-darnagray">
+                        Once your order ships, you will receive an email with a tracking link. You can also track via our website under "Track Order".
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-32 bg-darnadark text-white relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none opacity-40">
+            <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-darnaaccent/20 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-darnaaccent/20 rounded-full blur-[100px]"></div>
+        </div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6">Join the DARNA Family</h2>
+            <p class="text-gray-300 mb-12 max-w-lg mx-auto text-lg">Subscribe for exclusive offers, early access to new collections, and home inspiration tailored for the UAE.</p>
+            <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
+                <input type="email" required placeholder="Your email address" class="flex-1 px-6 py-4 rounded-full bg-white/5 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-darnaaccent transition-colors">
+                <button type="submit" class="px-8 py-4 bg-darnaaccent text-white rounded-full font-medium hover:bg-white hover:text-darnadark transition-colors duration-300">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#111111] text-gray-400 py-20 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="col-span-1 md:col-span-1">
+                <a href="#" class="font-serif text-3xl font-bold tracking-widest text-white mb-6 block">DARNA</a>
+                <p class="text-sm leading-relaxed">Better Products. Better Living.<br>Home & Kitchen essentials for the modern UAE.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-medium mb-6 uppercase tracking-wider text-sm">Shop</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="/collections/kitchen-essentials" class="hover:text-darnaaccent transition">Kitchen Essentials</a></li>
+                    <li><a href="/collections/home-organisation" class="hover:text-darnaaccent transition">Home Organisation</a></li>
+                    <li><a href="/collections/cleaning" class="hover:text-darnaaccent transition">Cleaning</a></li>
+                    <li><a href="/collections/storage" class="hover:text-darnaaccent transition">Storage</a></li>
+                    <li><a href="/collections/cooking-tools" class="hover:text-darnaaccent transition">Cooking Tools</a></li>
+                    <li><a href="/collections/home-accessories" class="hover:text-darnaaccent transition">Home Accessories</a></li>
+                    <li><a href="/collections/smart-home" class="hover:text-darnaaccent transition">Smart Home</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-medium mb-6 uppercase tracking-wider text-sm">Customer Support</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#" class="hover:text-darnaaccent transition">Contact</a></li>
+                    <li><a href="#" class="hover:text-darnaaccent transition">Track Order</a></li>
+                    <li><a href="#" class="hover:text-darnaaccent transition">FAQ</a></li>
+                    <li><a href="#" class="hover:text-darnaaccent transition">Returns & Exchanges</a></li>
+                    <li><a href="#" class="hover:text-darnaaccent transition">About</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-medium mb-6 uppercase tracking-wider text-sm">Company</h4>
+                <ul class="space-y-3 text-sm">
+                    <li><a href="#" class="hover:text-darnaaccent transition">Our Story</a></li>
+                    <li><a href="#" class="hover:text-darnaaccent transition">Sustainability</a></li>
+                    <li><a href="#" class="hover:text-darnaaccent transition">Careers</a></li>
+                    <li class="pt-4 text-xs text-gray-500 font-medium tracking-widest">HOME · UAE</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs">
+            <p>&copy; 2024 DARNA. All rights reserved.</p>
+            <div class="flex gap-6 mt-4 md:mt-0">
+                <a href="#" class="hover:text-white transition">Instagram</a>
+                <a href="#" class="hover:text-white transition">TikTok</a>
+                <a href="#" class="hover:text-white transition">Pinterest</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('translate-x-full');
+            mobileMenu.classList.toggle('translate-x-0');
+        });
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenu.classList.remove('translate-x-0');
+            });
+        });
+
+        // Header Scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md', 'bg-white/95');
+                header.classList.remove('glass-panel');
+            } else {
+                header.classList.remove('shadow-md', 'bg-white/95');
+                header.classList.add('glass-panel');
+            }
+        });
+
+        // Hero Parallax
+        const layers = document.querySelectorAll('.parallax-layer');
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            
+            layers.forEach(layer => {
+                const speed = parseFloat(layer.getAttribute('data-speed'));
+                const xOffset = x * 50 * speed;
+                const yOffset = y * 50 * speed;
+                layer.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+        });
+
+        // 3D Tilt Cards
+        const tiltCards = document.querySelectorAll('.tilt-card');
+        tiltCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'none';
+            });
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -4;
+                const rotateY = ((x - centerX) / centerX) * 4;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transition = 'transform 0.5s ease';
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
+        });
+
+        // FAQ Accordion
+        function toggleFaq(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('svg');
+            
+            if (content.classList.contains('open')) {
+                content.style.maxHeight = '0px';
+                content.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+                btn.parentElement.classList.remove('shadow-premium');
+                btn.parentElement.classList.add('shadow-sm');
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                content.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
+                btn.parentElement.classList.add('shadow-premium');
+                btn.parentElement.classList.remove('shadow-sm');
+            }
+        }
+
+        // Quick Add Simulation
+        function simulateAddToCart(form) {
+            const btn = form.querySelector('button');
+            const text = btn.querySelector('.btn-text');
+            const loader = btn.querySelector('.btn-loader');
+            
+            text.innerText = 'Adding...';
+            loader.classList.remove('hidden');
+            
+            setTimeout(() => {
+                text.innerText = 'Added to Cart';
+                loader.classList.add('hidden');
+                btn.classList.add('bg-darnaaccent');
+                btn.classList.remove('bg-darnadark');
+                
+                const cartCount = document.querySelector('.cart-count');
+                if(cartCount) {
+                    let current = parseInt(cartCount.innerText);
+                    cartCount.innerText = current + 1;
+                    cartCount.classList.remove('scale-0');
+                    cartCount.classList.add('scale-100');
+                }
+                
+                setTimeout(() => {
+                    text.innerText = 'Quick Add';
+                    btn.classList.remove('bg-darnaaccent');
+                    btn.classList.add('bg-darnadark');
+                }, 2000);
+            }, 800);
+        }
+
+        // Buy It Now Simulation
+        function simulateBuyNow(form) {
+            const btn = form.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Redirecting...';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                alert('Proceeding to Shopify Checkout...');
+            }, 1000);
+        }
+
+        // Newsletter Simulation
+        function subscribeNewsletter(form) {
+            const btn = form.querySelector('button');
+            btn.innerText = 'Subscribed!';
+            form.reset();
+            setTimeout(() => { btn.innerText = 'Subscribe'; }, 3000);
+        }
+    </script>
+</body>
+</html>
